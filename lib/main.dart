@@ -150,13 +150,18 @@ class _SignupState extends State<Signup> {
                     RegExp regExp = new RegExp(pattern);
                     bool flagRegEx = regExp.hasMatch(value);
                     bool flagLength = value.toString().length >= 8 ;
-                    bool flagEmail = value != email;
-                    bool flagId = value != emotivID;
-                    if(flagEmail && flagId){
-                      if (!flagRegEx && flagLength) {
-                        return 'only lowercase letters, numbers and the following characters . - _';
-                      }
+                    bool flagEmail = value == email;
+                    bool flagEmotivID = value == emotivID;
+                    if (!flagRegEx && flagLength) {
+                      return 'only lowercase letters, numbers and the following characters . - _';
                     }
+
+                    if(flagEmail)
+                      return 'should not be same as email.';
+
+                    if(flagEmotivID)
+                      return 'should not be same as emotivID.';
+
                     return null;
                   },
                 ),
