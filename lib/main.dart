@@ -58,6 +58,8 @@ class _SignupState extends State<Signup> {
     return null;
   };
 
+
+
   Function sqlInjectoinValidator = (value){
     RegExp regExp = RegExp(r"^([a-z]|[A-Z]|[0-9]){4,10}$");
     print("sqlInjectoinValidator ${regExp.hasMatch(value)}");
