@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -47,6 +48,26 @@ class _SignupState extends State<Signup> {
     ),
   );
 
+  Function emailValidator = (value){
+    RegExp regExp = RegExp(r".+\@.+\..+");
+    print("emailValidator ${regExp.hasMatch(value)}");
+    bool flag = regExp.hasMatch(value);
+    if(!flag){
+    return "not email format";
+    }
+    return null;
+  };
+
+  Function sqlInjectoinValidator = (value){
+    RegExp regExp = RegExp(r"^([a-z]|[A-Z]|[0-9]){4,10}$");
+    print("sqlInjectoinValidator ${regExp.hasMatch(value)}");
+    bool flag = regExp.hasMatch(value);
+    if(!flag){
+      return "Only Letters and numbers!";
+    }
+    return null;
+  };
+
   Function IdValidator = (value) {
     String pattern =r'^[a-z0-9_/\-/\.]+$';
     RegExp regExp = RegExp(pattern);
@@ -89,6 +110,8 @@ class _SignupState extends State<Signup> {
                       this.firstname = value;
                     });
                   },
+                  validator: sqlInjectoinValidator,
+                  maxLength: 10,
                 ),
                 Divider(),
                 TextFormField(
@@ -98,6 +121,8 @@ class _SignupState extends State<Signup> {
                       this.lastname = value;
                     });
                   },
+                  validator: sqlInjectoinValidator,
+                  maxLength: 10,
                 ),
                 Divider(),
                 TextFormField(
@@ -117,6 +142,8 @@ class _SignupState extends State<Signup> {
                       this.email = value;
                     });
                   },
+                  validator: emailValidator,
+                  keyboardType: TextInputType.emailAddress,
                 ),
                 Divider(),
                 TextFormField(
@@ -126,6 +153,7 @@ class _SignupState extends State<Signup> {
                       this.gender = value;
                     });
                   },
+                  maxLength: 5,
                 ),
                 Divider(),
                 TextFormField(
@@ -136,6 +164,8 @@ class _SignupState extends State<Signup> {
                       this.birthofdate = value;
                     });
                   },
+                  maxLength: 10,
+                  keyboardType: TextInputType.datetime,
                 ),
                 Divider(),
                 TextFormField(
@@ -145,6 +175,7 @@ class _SignupState extends State<Signup> {
                       this.password = value;
                     });
                   },
+                  keyboardType: TextInputType.visiblePassword,
                   validator: (value) {
                     String pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-._]).{8,30}$';
                     RegExp regExp = new RegExp(pattern);
@@ -174,6 +205,7 @@ class _SignupState extends State<Signup> {
                       this.confirmpassword = value;
                     });
                   },
+                  keyboardType: TextInputType.visiblePassword,
                   validator: (value){
                     if(value == password){
                       return null;
